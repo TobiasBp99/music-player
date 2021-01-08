@@ -1,0 +1,103 @@
+Desarrollar un sistema que permita reproducir canciones de manera descentralizada.
+Habrá un equipo (servidor) que tendrá las canciones y a través de una conexión de red, 
+y a pedido, deberán ser enviado al solicitante (cliente).
+Estará conformado por dos programas. Uno cumplirá la función de servidor y el otro 
+del cliente.
+
+Cliente:
+
+    Será el encargado de interactuar con el usuario.
+    Deberá solicitarle un nombre de identificación (alias).
+    Luego se conectará con el servidor y le enviará el alias.
+    Recibe los parámetros de codificación de los archivos de sonido.
+    Configura el dispositivo de salida.
+    Luego recibe el listado de archivos y los muestra en pantalla (*).
+    El usuario escribirá el nombre del archivo que desea reproducir y el programa se 
+	lo enviará al servidor.
+    Poner un cartel por pantalla que diga "Reproduciendo: " y el nombre del tema.
+    A continuación comienza a recibir el archivo de música que lo deberá enviar a 
+	reproducir a medida que lo reciba (en tiempo real).
+    Una vez finalizada la reproducción vuelve al punto marcado con (*).
+    La ejecución finalizará cuando en lugar del nombre de archivo, escriba Exit 
+	(y no es Case Sensitive).
+
+Recibe por argumento de main la dirección o el nombre del servidor.
+Si no se especifica, se conectará con el localhost y mostrará un mensaje por pantalla
+indicando que no se especificó servidor destino y se utilizará localhost.
+
+Servidor:
+
+    El servidor se ejecutará en forma permanente. 
+	La condición de finalización será con Ctrl-C.
+    El puerto para montar el servidor será leído del archivo de configuración y si el 
+	parámetro no está, se montará en el puerto default (definirlo como constante 
+	simbólica en el header correspondiente con el valor 8888).
+    Una vez iniciado el servidor, presentará un mensaje por pantalla que diga: 
+	"En ejecución..... Puerto: "
+    Tendrá la capacidad de atender clientes en simultáneo. Es decir que no deberá 
+	quedar atendiendo solo una conexión.
+    Una vez recibida una conexión, sacará por pantalla un mensaje informando la 
+	dirección desde la que se conectó y el nombre de identificación del usuario 
+	(alias).
+    Primero enviará los parámetros con que deberá configurar el conversor digital 
+	analógico.
+    Luego le enviará la lista de archivos que se encuentren en el directorio 
+	correspondiente (*).
+    Recibe el nombre del tema a reproducir y envía el archivo.
+    Una vez finalizado el envío del archivo vuelve al punto (*).
+    La conexión con ese usuario quedará establecida hasta que reciba la palabra 
+	SalidA (Case Sensitive) 
+
+El proceso servidor deberá cuidar de no dejar procesos zombies.
+Deberá utilizar la señal correspondiente a la finalización del proceso hijo.
+
+Posee un archivo de configuración (archivo de texto) llamado servidor.cfg donde se 
+indica el port donde se montará el servicio y los parámetros de conversión de los 
+archivos y el directorio donde están los archivos.
+El formato sera con el parámetro seguido de un igual y termina en un enter 
+(pueden estar en cualquier orden):
+PORT=
+RATE=
+SIZE=
+CHANNELS=
+DIR=
+
+Ambos programas deberán compilar sin errores ni warnings, deberán validar errores, 
+cerrar todos los archivos que abran y liberar toda la memoria que pidan.
+
+Estructura del directorio del proyecto:
+Directorio Principal: Alumno (Apellido_Nombre) (contiene el archivo Makefile 
+y los siguientes directorios):
+	directorio src: Archivos fuentes
+	directorio bin: ejecutables (para considerar en el makefile, no se deberán subir ni objetos ni ejecutables al git).
+	directorio musica: temas para reproducir (no subir)
+	directorio header: archivos de cabecera
+	directorio cfg: archivos de configuración 
+
+Nombre del archivo fuente del servidor: servidor.c
+Nombre del archivo fuente del cliente: cliente.c
+Nombre del archivo fuente de funciones auxiliares: funciones.c (será utilizado tanto 
+por el servidor como por el cliente).
+Los ejecutables deberán tener los mismos nombres que los fuentes.
+Deberá haber un header por cada archivo fuente (con el mismo nombre).
+
+Reglas a desarrollar en el archivo Makefile
+
+    servidor (compila el servidor y verifica el Makefile)
+    cliente (compila el cliente y verifica el Makefile)
+    all (compila el servidor y el cliente)
+    clean (borra los objetos y los ejecutables)
+    new (realiza una limpieza y una recompilación de todos los fuentes)
+    runserver (Realiza la compilación del servidor y una vez finalizada lo ejecuta).
+    runclient (Realiza la compilación del cliente y una vez finalizada lo ejecuta).
+
+La regla por defecto debe ser all.
+
+
+
+
+
+
+
+
+
